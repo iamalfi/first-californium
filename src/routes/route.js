@@ -7,6 +7,8 @@ const welcome=require('../logger/logger')
 const {getBatchInfo, printDate}=require("../util/helper");
 const format=require("../validator/formatter")
 const lodash = require('lodash');
+const players = require('../util/players')
+const persons=require("../util/person")
 
 router.get('/test-me', function (req, res) {
     console.log("email from introduction module", intro.myEmail)
@@ -117,5 +119,32 @@ router.get("/sol1", function (req, res) {
     res.send(  { data: missingNumber  }  );
 });
 
+router.post("/players",(req,res)=>{
+      
+    for (let i = 0 ; i< players.length ; i++ ){
+        if(players[i].name == req.body.name){
+            return res.send("already exists")
+        }
+    }
+    players.push(req.body)
+    return res.send(players)
+})
 
-module.exports = router;
+
+
+
+// you will be given an array of persons ( i.e an array of objects )..each person will have  a {name: String , age: Number, votingStatus: true/false(Boolean)}
+// take input in query param as votingAge..and for all the people above that age, change votingStatus as true
+// also return an array consisting of only the person that can vote
+
+router.get("/persons",(req,res)=>{
+   let votingAge=req.query.votingAge
+   
+   const result = persons.filter(element=> element.age>=votingAge)
+    result.forEach(object => {
+        object.votingStatus = true;
+    })
+   res.send(result)
+})
+
+module.exports = router
