@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const persons = require('../util/person');
+
 router.get('/students/:name', function(req, res) {
     let studentName = req.params.name
     console.log(studentName)
@@ -159,5 +161,20 @@ router.post( "/post-query-2", function (req, res){
     res.send( {data: finalArr , status: true})
 })
 
+
+// you will be given an array of persons ( i.e an array of objects )..each person will have  a {name: String , age: Number, votingStatus: true/false(Boolean)}
+// take input in query param as votingAge..and for all the people above that age, change votingStatus as true
+// also return an array consisting of only the person that can vote
+
+router.get("/persons",(req,res)=>{
+    let votingAge=req.query.votingAge
+    
+    const result = persons.filter(element=> element.age>=votingAge)
+     result.forEach(object => {
+         object.votingStatus = true;
+     })
+    res.send(result)
+ })
+ 
 
 module.exports = router;
