@@ -17,13 +17,20 @@ exports.createProduct = async(req, res) => {
 exports.createUser = async (req, res) => {
     const user = req.body;
     let isFreeAppUser = req.isFreeAppUser
-    console.log(isFreeAppUser);
+    // console.log(isFreeAppUser);
     const createdUser = await User.create({...user,isFreeAppUser})
     res.json({msg:'user created successfully',user:createdUser});
 }
 // Write a POST api for order purchase that takes a userId and a productId in request body. 
 // If the header **isFreeAppUser** is not present terminate the request response cycle with an error message that the request is missing a mandatory header.
 // If the header is present the control goes to the request handler. Perform the user and product validation. Check if the user exists as well as whether the product exists. Return an error with a suitable error message if either of these validations fail
+
+
+
+
+
+// For every purchase we save an order document in the orders collection. isFreeAppUser property in an Order document depends on the header **isFreeAppUser**. If the **isFreeAppUser** header is true then the balance of the user is not deducted and the amount in order is set to 0 as well the attribute in order **isFreeAppUser** is set to true. If this header has a false value then the product’s price is checked. This value is deducted from the user’s balance and the order amount is set to the product’s price as well as the attrbiute **isFreeAppUser** is set to false in order document.
+
 
 
 // ### Hints for problem 3
@@ -78,5 +85,4 @@ exports.createOrder=async(req,res)=>{
     res.json({msg:'order created successfully',order:createdorder});
 }
 
-// For every purchase we save an order document in the orders collection. isFreeAppUser property in an Order document depends on the header **isFreeAppUser**. If the **isFreeAppUser** header is true then the balance of the user is not deducted and the amount in order is set to 0 as well the attribute in order **isFreeAppUser** is set to true. If this header has a false value then the product’s price is checked. This value is deducted from the user’s balance and the order amount is set to the product’s price as well as the attrbiute **isFreeAppUser** is set to false in order document.
 
