@@ -41,8 +41,6 @@ const getXINRBooks = async (req, res)   => {
     const books = await book.find({'price.indianPrice': {$in: ["100INR","300INR", "500INR"]}});
     res.json(books)
 }
-    
-    // kro age ka
 
 
 // getRandomBooks - returns books that are available in stock or have more than 500 pages 
