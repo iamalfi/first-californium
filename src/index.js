@@ -22,6 +22,7 @@ app.use (
   );
 
 app.use('/', route);
+app.use('/user',require('./routes/newroutes'))
 
 
 app.listen(process.env.PORT || 3000, function () {
